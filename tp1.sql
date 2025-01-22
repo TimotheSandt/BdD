@@ -140,8 +140,21 @@ ORDER BY prix_total_HT;
 
 
 -- R8
-SELECT ARTICLE.designation, LIGNE.quantite, COMMANDE.dateCommande, COMMANDE.idCommande
+SELECT ARTICLE.designation, LIGNE.quantite, YEAR(COMMANDE.dateCommande) AS anneeCommande, COMMANDE.idCommande
 FROM LIGNE
 RIGHT JOIN ARTICLE ON LIGNE.idArticle = ARTICLE.idArticle
 LEFT JOIN COMMANDE ON LIGNE.idCommande = COMMANDE.idCommande
 ORDER BY ARTICLE.designation, COMMANDE.dateCommande DESC, LIGNE.quantite DESC, COMMANDE.idCommande;
+
+
+-- R9
+SELECT ARTICLE.designation, LIGNE.quantite, YEAR(COMMANDE.dateCommande) AS anneeCommande, COMMANDE.idCommande
+FROM LIGNE
+JOIN ARTICLE ON LIGNE.idArticle = ARTICLE.idArticle
+JOIN COMMANDE ON LIGNE.idCommande = COMMANDE.idCommande
+WHERE YEAR(COMMANDE.dateCommande) = 2023
+    AND ARTICLE.designation IN 
+        (SELECT ARTICLE.designation FROM LIGNE
+         JOIN ARTICLE ON LIGNE.idArticle = ARTICLE.idArticle
+         JOIN COMMANDE ON LIGNE.idCommande = COMMANDE.idCommande
+         WHERE YEAR(COMMANDE.dateCommande) = 2024);
