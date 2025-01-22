@@ -137,3 +137,11 @@ JOIN CLIENT ON COMMANDE.idClient = CLIENT.idClient
 JOIN ARTICLE ON LIGNE.idArticle = ARTICLE.idArticle
 GROUP BY LIGNE.idCommande, CLIENT.nom
 ORDER BY prix_total_HT;
+
+
+-- R8
+SELECT ARTICLE.designation, LIGNE.quantite, COMMANDE.dateCommande, COMMANDE.idCommande
+FROM LIGNE
+RIGHT JOIN ARTICLE ON LIGNE.idArticle = ARTICLE.idArticle
+LEFT JOIN COMMANDE ON LIGNE.idCommande = COMMANDE.idCommande
+ORDER BY ARTICLE.designation, COMMANDE.dateCommande DESC, LIGNE.quantite DESC, COMMANDE.idCommande;
