@@ -127,3 +127,13 @@ JOIN ARTICLE ON LIGNE.idArticle = ARTICLE.idArticle
 WHERE CLIENT.nom = "Mutz"
 GROUP BY LIGNE.idCommande, CLIENT.nom
 ORDER BY prix_total DESC;
+
+
+-- R7
+SELECT CLIENT.nom, LIGNE.idCommande, SUM(ARTICLE.prix * LIGNE.quantite) AS prix_total_HT, SUM(ARTICLE.prix * LIGNE.quantite) * 0.2 AS TVA, SUM(ARTICLE.prix * LIGNE.quantite) * 1.2 AS prix_total_TTC
+FROM LIGNE
+JOIN COMMANDE ON LIGNE.idCommande = COMMANDE.idCommande
+JOIN CLIENT ON COMMANDE.idClient = CLIENT.idClient
+JOIN ARTICLE ON LIGNE.idArticle = ARTICLE.idArticle
+GROUP BY LIGNE.idCommande, CLIENT.nom
+ORDER BY prix_total_HT;
