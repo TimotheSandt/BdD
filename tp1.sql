@@ -116,3 +116,14 @@ JOIN CLIENT ON COMMANDE.idClient = CLIENT.idClient
 JOIN ARTICLE ON LIGNE.idArticle = ARTICLE.idArticle
 WHERE CLIENT.nom = "Mutz"
 ORDER BY prix_total DESC;
+
+
+-- R6
+SELECT CLIENT.nom, LIGNE.idCommande, SUM(ARTICLE.prix * LIGNE.quantite) AS prix_total
+FROM LIGNE
+JOIN COMMANDE ON LIGNE.idCommande = COMMANDE.idCommande
+JOIN CLIENT ON COMMANDE.idClient = CLIENT.idClient
+JOIN ARTICLE ON LIGNE.idArticle = ARTICLE.idArticle
+WHERE CLIENT.nom = "Mutz"
+GROUP BY LIGNE.idCommande, CLIENT.nom
+ORDER BY prix_total DESC;
