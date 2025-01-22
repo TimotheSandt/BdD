@@ -100,9 +100,19 @@ WHERE CLIENT.nom = "Mutz";
 
 
 -- R4
-SELECT CLIENT.nom, ARTICLE.designation, ARTICLE.prix, LIGNE.quantite, COMMANDE.idCommande
+SELECT CLIENT.nom, ARTICLE.designation, ARTICLE.prix, LIGNE.quantite, LIGNE.idCommande
 FROM LIGNE
 JOIN COMMANDE ON LIGNE.idCommande = COMMANDE.idCommande
 JOIN CLIENT ON COMMANDE.idClient = CLIENT.idClient
 JOIN ARTICLE ON LIGNE.idArticle = ARTICLE.idArticle
 WHERE CLIENT.nom = "Mutz";
+
+
+-- R5
+SELECT CLIENT.nom, ARTICLE.designation, LIGNE.idCommande, ARTICLE.prix * LIGNE.quantite AS prix_total
+FROM LIGNE
+JOIN COMMANDE ON LIGNE.idCommande = COMMANDE.idCommande
+JOIN CLIENT ON COMMANDE.idClient = CLIENT.idClient
+JOIN ARTICLE ON LIGNE.idArticle = ARTICLE.idArticle
+WHERE CLIENT.nom = "Mutz"
+ORDER BY prix_total DESC;
