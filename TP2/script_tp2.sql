@@ -5,13 +5,13 @@ DROP TABLE IF EXISTS competition;
 DROP TABLE IF EXISTS station;
 DROP TABLE IF EXISTS specialite;
 
-CREATE TABLE specialite (
+CREATE TABLE IF NOT EXISTS specialite (
 	idSpecialite INT AUTO_INCREMENT,
 	libelleSpecialite VARCHAR(255),
     PRIMARY KEY (idSpecialite)
 );
 
-CREATE TABLE station (
+CREATE TABLE IF NOT EXISTS station (
 	idStation INT AUTO_INCREMENT,
 	nomStation VARCHAR(255),
 	altitude INT,
@@ -19,7 +19,7 @@ CREATE TABLE station (
     PRIMARY KEY (idStation)
 );
 
-CREATE TABLE competition (
+CREATE TABLE IF NOT EXISTS competition (
 	idCompetition INT AUTO_INCREMENT,
 	libelleCompet VARCHAR(255),
 	dateComp DATE,
@@ -28,7 +28,7 @@ CREATE TABLE competition (
 	FOREIGN KEY (idStation) REFERENCES station(idStation)
 );
 
-CREATE TABLE skieur (
+CREATE TABLE IF NOT EXISTS skieur (
 	idSkieur INT AUTO_INCREMENT,
 	nomSkieur VARCHAR(255),
 	idSpecialite INT,
@@ -38,7 +38,7 @@ CREATE TABLE skieur (
 	FOREIGN KEY (idStation) REFERENCES station(idStation)
 );
 
-CREATE TABLE classement (
+CREATE TABLE IF NOT EXISTS classement (
 	idSkieur INT,
 	idCompetition INT,
 	classement INT,
@@ -46,7 +46,7 @@ CREATE TABLE classement (
 	FOREIGN KEY (idCompetition) REFERENCES competition(idCompetition)
 );
 
-CREATE TABLE comporte (
+CREATE TABLE IF NOT EXISTS comporte (
 	idCompetition INT,
 	idSpecialite INT,
     PRIMARY KEY (idCompetition, idSpecialite),
@@ -93,3 +93,9 @@ WHERE idSkieur IN (
     FROM classement
 );
 
+-- R2
+
+SELECT skieur.nomSkieur, station.nomStation
+FROM skieur
+JOIN station ON skieur.idStation = station.idStation
+ORDER BY station.nomStation, skieur.nomSkieur;
