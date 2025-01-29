@@ -117,4 +117,10 @@ JOIN station ON competition.idStation = station.idStation
 WHERE station.nomStation = "Tignes" AND classement.classement = 1;
 
 
+-- R5
 
+SELECT station.idStation, station.nomStation, COUNT(competition.libelleCompet) AS NbreSkieurDansUneCompet
+FROM competition
+JOIN station ON competition.idStation = station.idStation
+GROUP BY station.idStation, station.nomStation
+ORDER BY station.nomStation;
