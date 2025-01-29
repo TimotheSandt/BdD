@@ -124,3 +124,16 @@ FROM competition
 JOIN station ON competition.idStation = station.idStation
 GROUP BY station.idStation, station.nomStation
 ORDER BY station.nomStation;
+
+
+-- R6
+
+SELECT skieur.idSkieur, skieur.nomSkieur, COUNT(classement.classement) AS NbreDeVictoire
+FROM classement
+JOIN skieur ON classement.idSkieur = skieur.idSkieur
+JOIN competition ON classement.idCompetition = competition.idCompetition
+JOIN station ON competition.idStation = station.idStation
+WHERE station.nomStation = "Tignes" AND classement.classement = 1
+GROUP BY skieur.idSkieur, skieur.nomSkieur;
+
+
