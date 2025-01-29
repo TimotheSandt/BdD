@@ -80,3 +80,16 @@ SELECT * FROM competition;
 SELECT * FROM skieur;
 SELECT * FROM classement;
 SELECT * FROM comporte;
+
+
+
+
+
+-- R1
+SELECT COUNT(*) AS NbreSkieurDansUneCompet
+FROM skieur
+WHERE idSkieur IN (
+    SELECT idSkieur
+    FROM classement
+);
+
