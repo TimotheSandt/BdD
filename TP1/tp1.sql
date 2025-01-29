@@ -158,3 +158,17 @@ WHERE YEAR(COMMANDE.dateCommande) = 2023
          JOIN ARTICLE ON LIGNE.idArticle = ARTICLE.idArticle
          JOIN COMMANDE ON LIGNE.idCommande = COMMANDE.idCommande
          WHERE YEAR(COMMANDE.dateCommande) = 2024);
+
+
+-- R10
+SELECT CLIENT.nom, COUNT(COMMANDE.idCommande) AS nbCommandes, coalesce(YEAR(COMMANDE.dateCommande), 0) AS anneeCommande
+FROM COMMANDE
+RIGHT JOIN CLIENT ON COMMANDE.idClient = CLIENT.idClient
+GROUP BY CLIENT.nom, anneeCommande
+ORDER BY nbCommandes DESC, CLIENT.nom;
+
+SELECT CLIENT.nom, COUNT(COMMANDE.idCommande) AS nbCommandes, ifnull(YEAR(COMMANDE.dateCommande), "pas de commande") AS anneeCommande
+FROM COMMANDE
+RIGHT JOIN CLIENT ON COMMANDE.idClient = CLIENT.idClient
+GROUP BY CLIENT.nom, anneeCommande
+ORDER BY nbCommandes DESC, CLIENT.nom;
