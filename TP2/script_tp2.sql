@@ -106,3 +106,15 @@ FROM classement
 JOIN skieur ON classement.idSkieur = skieur.idSkieur
 JOIN competition ON classement.idCompetition = competition.idCompetition
 ORDER BY competition.libelleCompet, classement.classement, skieur.nomSkieur;
+
+-- R4
+
+SELECT competition.libelleCompet, skieur.nomSkieur
+FROM classement
+JOIN skieur ON classement.idSkieur = skieur.idSkieur
+JOIN competition ON classement.idCompetition = competition.idCompetition
+JOIN station ON competition.idStation = station.idStation
+WHERE station.nomStation = "Tignes" AND classement.classement = 1;
+
+
+
