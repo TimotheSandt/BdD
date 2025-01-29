@@ -99,3 +99,10 @@ SELECT skieur.nomSkieur, station.nomStation
 FROM skieur
 JOIN station ON skieur.idStation = station.idStation
 ORDER BY station.nomStation, skieur.nomSkieur;
+
+-- R3
+SELECT skieur.nomSkieur, classement.classement, competition.libelleCompet
+FROM classement
+JOIN skieur ON classement.idSkieur = skieur.idSkieur
+JOIN competition ON classement.idCompetition = competition.idCompetition
+ORDER BY competition.libelleCompet, classement.classement, skieur.nomSkieur;
