@@ -142,14 +142,8 @@ GROUP BY skieur.idSkieur, skieur.nomSkieur;
 
 
 -- Supprimer le contenu des tables comportant classement et competition
-DELETE FROM classement;
 DELETE FROM comporte;
-
--- Insérer des enregistrements avec les fichiers CSV
-LOAD DATA LOCAL INFILE 'COMPORTEv2.csv' INTO TABLE comporte 
-    CHARACTER SET utf8 FIELDS TERMINATED BY ',';
-LOAD DATA LOCAL INFILE 'classementv2.csv' INTO TABLE classement 
-    CHARACTER SET utf8 FIELDS TERMINATED BY ',';
+DELETE FROM classement;
 
 -- Supprimer les enregistrements dans la table competition avec TRUNCATE
 SET FOREIGN_KEY_CHECKS = 0;
@@ -159,6 +153,16 @@ SET FOREIGN_KEY_CHECKS = 1;
 -- Insérer des enregistrements après TRUNCATE
 LOAD DATA LOCAL INFILE 'COMPETITIONv2.csv' INTO TABLE competition 
     CHARACTER SET utf8 FIELDS TERMINATED BY ',';
+LOAD DATA LOCAL INFILE 'classementv2.csv' INTO TABLE classement 
+    CHARACTER SET utf8 FIELDS TERMINATED BY ',';
+-- Insérer des enregistrements avec les fichiers CSV
+LOAD DATA LOCAL INFILE 'COMPORTEv2.csv' INTO TABLE comporte 
+    CHARACTER SET utf8 FIELDS TERMINATED BY ',';
+
+
+
+
+
 
 
 
@@ -239,3 +243,13 @@ VALUES ('alphand',
 
 SELECT * 
 FROM skieur;
+
+
+-- R14
+
+SELECT competition.libelleCompet
+FROM competition
+JOIN comporte ON comporte.idCompetition = competition.idCompetition
+GROUP BY competition.libelleCompet
+HAVING COUNT(DISTINCT comporte.idSpecialite) > 2;
+
