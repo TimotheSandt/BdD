@@ -276,3 +276,18 @@ WHERE classement <= (
 	JOIN skieur ON classement.idSkieur = skieur.idSkieur
 	WHERE nomSkieur = 'tom'
 ) AND nomSkieur != 'tom';
+
+
+-- R17
+
+SELECT nomSkieur
+FROM classement
+JOIN skieur ON classement.idSkieur = skieur.idSkieur
+WHERE classement = 1
+GROUP BY nomSkieur
+HAVING COUNT(classement) >= (
+	SELECT COUNT(classement)
+	FROM classement
+	JOIN skieur ON classement.idSkieur = skieur.idSkieur
+	WHERE classement = 1 AND nomSkieur = 'pierre'
+) AND nomSkieur != 'pierre';
