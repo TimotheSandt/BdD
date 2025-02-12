@@ -139,6 +139,7 @@ GROUP BY skieur.idSkieur, skieur.nomSkieur;
 
 -- R7
 
+-- je suis raciste
 
 
 -- Supprimer le contenu des tables comportant classement et competition
@@ -291,3 +292,28 @@ HAVING COUNT(classement) >= (
 	JOIN skieur ON classement.idSkieur = skieur.idSkieur
 	WHERE classement = 1 AND nomSkieur = 'pierre'
 ) AND nomSkieur != 'pierre';
+
+
+-- R18
+
+START TRANSACTION;
+
+
+UPDATE competition
+SET idStation = (SELECT idStation FROM station WHERE nomStation = 'valoire')
+WHERE idStation = (SELECT idStation FROM station WHERE nomStation = 'chambery');
+
+
+SET FOREIGN_KEY_CHECKS = 0;
+
+DELETE FROM station
+WHERE nomStation = 'chambery';
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+COMMIT;
+
+SELECT * FROM competition;
+SELECT * FROM station;
+
+-- end
