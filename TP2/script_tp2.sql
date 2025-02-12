@@ -219,3 +219,23 @@ WHERE idSpecialite IN (
     FROM skieur
     WHERE nomSkieur = 'paul'
 ) AND NOT nomSkieur = 'paul';
+
+
+-- R13
+
+INSERT INTO skieur (nomSkieur, idStation, idSpecialite) 
+VALUES ('alphand',
+	(
+		SELECT s.idStation
+		FROM skieur s
+		WHERE s.nomSkieur = 'pierre'
+	),
+	(
+		SELECT s.idSpecialite
+		FROM skieur s
+		WHERE s.nomSkieur = 'paul'
+	)	
+);
+
+SELECT * 
+FROM skieur;
