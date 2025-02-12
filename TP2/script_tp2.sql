@@ -253,3 +253,13 @@ JOIN comporte ON comporte.idCompetition = competition.idCompetition
 GROUP BY competition.libelleCompet
 HAVING COUNT(DISTINCT comporte.idSpecialite) > 2;
 
+
+-- R15
+
+SELECT nomSkieur
+FROM skieur
+WHERE idStation = (
+	SELECT idStation
+	FROM skieur
+	WHERE nomSkieur = 'tom'
+) AND nomSkieur != 'tom';
