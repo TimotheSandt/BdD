@@ -263,3 +263,16 @@ WHERE idStation = (
 	FROM skieur
 	WHERE nomSkieur = 'tom'
 ) AND nomSkieur != 'tom';
+
+
+-- R16
+
+SELECT DISTINCT nomSkieur
+FROM classement
+JOIN skieur ON classement.idSkieur = skieur.idSkieur
+WHERE classement <= (
+	SELECT MIN(classement)
+	FROM classement
+	JOIN skieur ON classement.idSkieur = skieur.idSkieur
+	WHERE nomSkieur = 'tom'
+) AND nomSkieur != 'tom';
