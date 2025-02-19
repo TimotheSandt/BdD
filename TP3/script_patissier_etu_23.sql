@@ -1,6 +1,67 @@
 -- DROP TABLE IF EXISTS ;
+DROP TABLE IF EXISTS realisation;
+DROP TABLE IF EXISTS estRattache;
+DROP TABLE IF EXISTS personne;
+DROP TABLE IF EXISTS boutique;
+DROP TABLE IF EXISTS recette;
+DROP TABLE IF EXISTS patisserie;
+
 
 -- CREATE TABLE 
+
+CREATE TABLE IF NOT EXISTS patisserie (
+    idPatisserie INT PRIMARY KEY,
+    nom VARCHAR(255),
+    categorie VARCHAR(255),
+    prixUnitaire DECIMAL(10, 2)
+);
+
+CREATE TABLE IF NOT EXISTS recette (
+    idPatisserie INT NOT NULL,
+    numDeclinaison INT NOT NULL,
+    ingredients TEXT,
+    description TEXT,
+    auteur VARCHAR(255),
+    annee INT,
+    PRIMARY KEY (idPatisserie, numDeclinaison),
+    FOREIGN KEY (idPatisserie) REFERENCES patisserie(idPatisserie)
+);
+
+CREATE TABLE IF NOT EXISTS boutique (
+    idBoutique INT PRIMARY KEY,
+    nom VARCHAR(255),
+    adresse VARCHAR(255),
+    codePostal VARCHAR(255),
+    ville VARCHAR(255)
+);
+
+CREATE TABLE IF NOT EXISTS personne (
+    idPersonne INT PRIMARY KEY,
+    nomPersonne VARCHAR(255),
+    prenom VARCHAR(255),
+    anneeNaissance INT
+);
+
+
+CREATE TABLE IF NOT EXISTS estRattache (
+    idPersonne INT NOT NULL,
+    idBoutique INT NOT NULL,
+    dateEmbauche DATE NOT NULL,
+    PRIMARY KEY (idPersonne, idBoutique),
+    FOREIGN KEY (idPersonne) REFERENCES personne(idPersonne),
+    FOREIGN KEY (idBoutique) REFERENCES boutique(idBoutique)
+);
+
+CREATE TABLE IF NOT EXISTS realisation (
+    idPersonne INT NOT NULL,
+    idPatisserie INT NOT NULL,
+    numDeclinaison INT NOT NULL,
+    dateRealisation DATE NOT NULL,
+    nbRealisation INT NOT NULL,
+    PRIMARY KEY (idPersonne, idPatisserie, numDeclinaison),
+    FOREIGN KEY (idPersonne) REFERENCES personne(idPersonne),
+    FOREIGN KEY (idPatisserie, numDeclinaison) REFERENCES recette(idPatisserie, numDeclinaison)
+);
 
 
 
