@@ -236,6 +236,13 @@ GROUP BY patisserie.nom;
 -- +-----------------------------------+--------------+
 
 
+SELECT nom, prixUnitaire
+FROM patisserie
+WHERE prixUnitaire = (
+    SELECT MAX(prixUnitaire)
+    FROM patisserie
+);
+
 
 -- 6. Donner les pâtissiers qui n’ont jamais réalisé de ’Baba au Rhum’ en 2021.
 
