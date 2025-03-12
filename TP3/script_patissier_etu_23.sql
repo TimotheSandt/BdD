@@ -168,6 +168,10 @@ WHERE idPersonne=:id1 or idPersonne=:id2;
 -- |            4 |
 -- +--------------+
 
+SELECT count(DISTINCT categorie) AS nb_categorie
+FROM patisserie;
+
+
 -- 2. Donner le nom des pâtisseries de catégorie ’gâteau’ ayant des marrons parmi ses ingrédients. Le résultat
 -- sera trié selon l’ordre lexicographique inverse sur le nom de la pâtisserie.
 
