@@ -274,6 +274,15 @@ WHERE personne.idPersonne NOT IN (
 -- | La RoseMontoise |                 152.5 | La RoseMontoise |
 -- +-----------------+-----------------------+-----------------+
 
+SELECT boutique.nom, SUM(patisserie.prixUnitaire * realisation.nbRealisation) AS prod12−2021−euros
+FROM boutique
+JOIN estRattache ON estRattache.idBoutique = boutique.idBoutique
+JOIN personne ON personne.idPersonne = estRattache.idPersonne
+JOIN realisation ON realisation.idPersonne = personne.idPersonne
+JOIN patisserie ON patisserie.idPatisserie = realisation.idPatisserie
+WHERE boutique.ville = 'valdoie' AND realisation.dateRealisation LIKE '2021-12%'
+GROUP BY boutique.nom;
+
 
 -- 8 : Donner le nom et le prix unitaire de la pâtisserie la plus chère pour chaque catégorie de pâtisserie.
 
