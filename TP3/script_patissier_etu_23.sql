@@ -254,6 +254,15 @@ WHERE prixUnitaire = (
 -- |          6 | perreira    | philippe |           1990 |
 -- +------------+-------------+----------+----------------+
 
+SELECT DISTINCT personne.idPersonne, personne.nomPersonne, personne.prenom, personne.anneeNaissance
+FROM personne
+WHERE personne.idPersonne NOT IN (
+    SELECT realisation.idPersonne
+    FROM realisation
+    JOIN patisserie ON patisserie.idPatisserie = realisation.idPatisserie
+    WHERE (realisation.dateRealisation BETWEEN '2021-01-01' AND '2021-12-31' AND patisserie.nom = 'Baba au Rhum')
+);
+
 
 -- 7 : Pour chaque boutique de la ville valdoie, donner le montant en euros des pâtisseries dans le mois de décembre 2021.
 -- Le résultat sera renommé en ’prod12-2021-euros’
