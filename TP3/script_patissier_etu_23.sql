@@ -10,10 +10,11 @@ DROP TABLE IF EXISTS patisserie;
 -- CREATE TABLE 
 
 CREATE TABLE IF NOT EXISTS patisserie (
-    idPatisserie INT PRIMARY KEY,
+    idPatisserie INT NOT NULL,
     nom VARCHAR(255),
     categorie VARCHAR(255),
-    prixUnitaire DECIMAL(10, 2)
+    prixUnitaire DECIMAL(10, 2),
+    PRIMARY KEY (idPatisserie)
 );
 
 CREATE TABLE IF NOT EXISTS recette (
@@ -24,22 +25,25 @@ CREATE TABLE IF NOT EXISTS recette (
     auteur VARCHAR(255),
     annee INT,
     PRIMARY KEY (idPatisserie, numDeclinaison),
-    FOREIGN KEY (idPatisserie) REFERENCES patisserie(idPatisserie)
+    CONSTRAINT fk_recette_patisserie
+        FOREIGN KEY (idPatisserie) REFERENCES patisserie(idPatisserie)
 );
 
 CREATE TABLE IF NOT EXISTS boutique (
-    idBoutique INT PRIMARY KEY,
+    idBoutique INT,
     nom VARCHAR(255),
     adresse VARCHAR(255),
     codePostal VARCHAR(255),
-    ville VARCHAR(255)
+    ville VARCHAR(255),
+    PRIMARY KEY (idBoutique)
 );
 
 CREATE TABLE IF NOT EXISTS personne (
-    idPersonne INT PRIMARY KEY,
+    idPersonne INT,
     nomPersonne VARCHAR(255),
     prenom VARCHAR(255),
-    anneeNaissance INT
+    anneeNaissance INT,
+    PRIMARY KEY (idPersonne)
 );
 
 
@@ -58,7 +62,7 @@ CREATE TABLE IF NOT EXISTS realisation (
     numDeclinaison INT NOT NULL,
     dateRealisation DATE NOT NULL,
     nbRealisation INT NOT NULL,
-    PRIMARY KEY (idPersonne, idPatisserie, numDeclinaison),
+    PRIMARY KEY (idPersonne, idPatisserie, numDeclinaison, dateRealisation),
     FOREIGN KEY (idPersonne) REFERENCES personne(idPersonne),
     FOREIGN KEY (idPatisserie, numDeclinaison) REFERENCES recette(idPatisserie, numDeclinaison)
 );
@@ -148,10 +152,11 @@ INSERT INTO realisation(idPersonne, idPatisserie, numDeclinaison, dateRealisatio
 
 
 -- test avec des variables sur datagrip
-
+/*
 SELECT idPersonne, nomPersonne, prenom, anneeNaissance
 FROM personne
 WHERE idPersonne=:id1 or idPersonne=:id2;
+*/
 
 
 -- 1. Donner le nombre de catégorie différente de pâtisseries triée selon l’ordre lexicographique (les doublons devront
