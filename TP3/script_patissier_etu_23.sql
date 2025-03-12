@@ -182,6 +182,12 @@ FROM patisserie;
 -- | bûche poires marrons et chocolat  |
 -- +-----------------------------------+
 
+SELECT DISTINCT patisserie.nom
+FROM patisserie
+JOIN recette ON patisserie.idPatisserie = recette.idPatisserie
+WHERE categorie = 'gateau' AND recette.ingredients LIKE '%marrons%'
+ORDER BY patisserie.nom DESC;
+
 
 -- 3. Donner le nom et le prénom des pâtissiers ayant réalisé plus de 100 macarons dans une journée entre
 -- le 1 septembre 2021 et le 31 décembre 2021. On précisera également la date la réalisation.
