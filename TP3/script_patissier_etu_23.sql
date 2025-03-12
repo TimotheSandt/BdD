@@ -199,6 +199,16 @@ ORDER BY patisserie.nom DESC;
 -- +-------------+--------+-----------------+
 
 
+SELECT personne.nomPersonne, personne.prenom, realisation.dateRealisation, patisserie.categorie, realisation.nbRealisation
+FROM realisation
+JOIN personne ON personne.idPersonne = realisation.idPersonne
+JOIN patisserie ON patisserie.idPatisserie = realisation.idPatisserie
+WHERE realisation.nbRealisation > 100 AND 
+    patisserie.categorie = 'macaron' AND    
+    realisation.dateRealisation BETWEEN "2021-09-01" AND "2021-12-31";
+
+
+
 -- 4. Donner le nombre de recettes différentes pour réaliser un macaron. Le résultat sera renommé en ’nbMacaronsDifférents’. Le résultat
 -- sera trié selon l'ordre lexicographique .
 
