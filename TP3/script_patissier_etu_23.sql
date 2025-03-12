@@ -219,6 +219,12 @@ WHERE realisation.nbRealisation > 100 AND
 -- |                    1 | macaron marrons  |
 -- +----------------------+------------------+
 
+SELECT COUNT(patisserie.nom), patisserie.nom
+FROM patisserie
+LEFT JOIN recette ON recette.idPatisserie = patisserie.idPatisserie
+WHERE patisserie.categorie = 'macaron'
+GROUP BY patisserie.nom;
+
 
 -- 5. Donner le nom et le prix unitaire de la pâtisserie la plus chère 
 
