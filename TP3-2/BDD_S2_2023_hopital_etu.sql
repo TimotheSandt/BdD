@@ -236,6 +236,13 @@ GROUP BY service.nom;
 -- |           3 | ophtalmologie |
 -- +-------------+---------------+
 
+SELECT COUNT(DISTINCT id_medecin) as nbr_medecin, service.nom as nom
+FROM medecin
+JOIN service ON medecin.id_service = service.id_service
+GROUP BY service.nom
+HAVING nbr_medecin > 2
+ORDER BY service.nom DESC;
+
 -- R4
 
 -- +----------+
