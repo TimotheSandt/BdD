@@ -314,6 +314,15 @@ WHERE (categorie, prixUnitaire) IN (
 -- |            1 | Baba au Rhum | gâteau    | 4.15         |            3 |
 -- +--------------+--------------+-----------+--------------+--------------+
 
+SELECT patisserie.idPatisserie, patisserie.nom, patisserie.categorie, patisserie.prixUnitaire, COUNT(DISTINCT realisation.idPersonne) AS nb_pers_diff
+FROM recette
+JOIN realisation ON realisation.idPatisserie = recette.idPatisserie AND realisation.numDeclinaison = recette.numDeclinaison
+JOIN patisserie ON patisserie.idPatisserie = recette.idPatisserie
+WHERE realisation.dateRealisation LIKE "2021%"
+GROUP BY idPatisserie, nom, categorie, prixUnitaire
+HAVING nb_pers_diff > 2;
+
+
 -- ------------------
 
 
