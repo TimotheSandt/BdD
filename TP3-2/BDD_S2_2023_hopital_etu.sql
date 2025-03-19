@@ -209,6 +209,9 @@ VALUES
 -- |                   3 |
 -- +---------------------+
 
+SELECT COUNT(DISTINCT id_medecin) AS medecins_avec_actes
+FROM acte;
+
 -- R2
 
 -- remplacer "genycologie" par "ophtalmologie"
