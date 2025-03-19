@@ -297,6 +297,14 @@ GROUP BY boutique.nom;
 -- | macaron      | macaron chocolat                  | 3.5          |
 -- +--------------+-----------------------------------+--------------+
 
+SELECT categorie, nom, prixUnitaire
+FROM patisserie
+WHERE (categorie, prixUnitaire) IN (
+    SELECT categorie, MAX(prixUnitaire)
+    FROM patisserie
+    GROUP BY categorie
+);
+
 
 -- 9 :   Donner les pâtisseries réalisées par plus de 2 pâtissiers différents en 2021.
 
