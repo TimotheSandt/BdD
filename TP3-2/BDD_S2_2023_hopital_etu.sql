@@ -72,6 +72,20 @@ CREATE TABLE acte(
    FOREIGN KEY (id_type_acte) REFERENCES type_acte(id_type_acte)
 );
 
+CREATE TABLE hospitalisation (
+   id_service INT,
+   id_salle INT,
+   id_patient INT,
+   date_entree DATE,
+   date_sortie DATE,
+   PRIMARY KEY (id_service, id_salle, id_patient, date_entree),
+   CONSTRAINT fk_service_hospitalisation
+      FOREIGN KEY (id_service) REFERENCES service(id_service),
+   CONSTRAINT fk_salle_hospitalisation
+      FOREIGN KEY (id_salle) REFERENCES salle(id_salle),
+   CONSTRAINT fk_patient_hospitalisation
+      FOREIGN KEY (id_patient) REFERENCES patient(id_patient)
+);
 
 
 INSERT INTO service VALUES
