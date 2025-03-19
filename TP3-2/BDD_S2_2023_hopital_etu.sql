@@ -252,6 +252,14 @@ ORDER BY service.nom DESC;
 -- | medecin6 |
 -- +----------+
 
+SELECT nom
+FROM medecin
+WHERE id_medecin NOT IN (
+   SELECT id_medecin
+   FROM acte
+   WHERE date_acte LIKE "2022%"
+) AND reponsable = 1;
+
 -- R5
 
 -- remplacer  'appendicite' par 'typeacte2' 
