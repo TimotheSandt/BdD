@@ -222,6 +222,12 @@ FROM acte;
 -- |                   6 |
 -- +---------------------+
 
+SELECT COUNT(DISTINCT id_patient) AS nbr_hospitalisation
+FROM hospitalisation
+JOIN service ON hospitalisation.id_service = service.id_service
+WHERE service.nom = "ophtalmologie"
+GROUP BY service.nom;
+
 -- R3
 
 -- +-------------+---------------+
