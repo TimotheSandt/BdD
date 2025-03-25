@@ -322,6 +322,19 @@ HAVING nb_dif_med >= 2;
 -- | patient4 |          4 |
 -- +----------+------------+
 
+SELECT nom, id_patient
+FROM patient
+WHERE id_patient IN (
+   SELECT patient.id_patient
+   FROM patient
+   JOIN acte ON patient.id_patient = acte.id_patient
+   JOIN hospitalisation ON acte.id_patient = hospitalisation.id_patient
+   WHERE hospitalisation.date_entree LIKE "2022%"
+   GROUP BY patient.nom, hospitalisation.date_entree
+   HAVING COUNT(acte.id_type_acte) >= 3
+);
+
+
 
 
 -- R9
