@@ -345,4 +345,30 @@ WHERE id_patient IN (
 -- | medecin2 |
 -- +----------+
 
+-- sans limit
+SELECT nom
+FROM medecin
+WHERE id_medecin IN (
+   SELECT id_medecin
+   FROM ( 
+      SELECT id_medecin, MAX(nb) as nb
+      FROM ( 
+         SELECT COUNT(id_type_acte) AS nb, id_medecin
+         FROM acte
+         WHERE date_acte LIKE "2022-12%"
+         GROUP BY id_medecin
+      ) AS nbre_acte
+   ) AS nbre_acte
+);
 
+-- avec limit
+SELECT nom
+FROM medecin
+WHERE id_medecin = (
+    SELECT id_medecin
+    FROM acte
+    WHERE date_acte LIKE '2022-12%'
+    GROUP BY id_medecin
+    ORDER BY COUNT(id_type_acte) DESC
+    LIMIT 1
+);
