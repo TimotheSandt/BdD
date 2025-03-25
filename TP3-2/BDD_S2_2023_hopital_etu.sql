@@ -280,13 +280,21 @@ WHERE cout > (
 
 -- R6
 
+--  remplacer 'durand' par 'medecin2' =
+
 -- +-----------------+
 -- | nbre_infirmiers |
 -- +-----------------+
 -- |               3 |
 -- +-----------------+
 
---  remplacer 'durand' par 'medecin2' =
+SELECT COUNT(id_infirmier) AS nbre_infirmiers
+FROM infirmier
+WHERE id_service IN (
+   SELECT id_service
+   FROM medecin
+   WHERE nom = 'medecin2'
+);
 
 -- R7
 
