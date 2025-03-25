@@ -305,7 +305,11 @@ WHERE id_service IN (
 -- | typeacte2 |          2 |
 -- +-----------+------------+
 
-
+SELECT libelle, COUNT(DISTINCT id_medecin) AS nb_dif_med
+FROM type_acte
+JOIN acte ON type_acte.id_type_acte = acte.id_type_acte
+GROUP BY libelle
+HAVING nb_dif_med >= 2;
 
 -- R8
 
