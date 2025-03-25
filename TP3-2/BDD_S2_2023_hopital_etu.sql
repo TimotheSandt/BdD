@@ -270,6 +270,13 @@ WHERE id_medecin NOT IN (
 -- | typeacte3 |
 -- +-----------+
 
+SELECT libelle
+FROM type_acte
+WHERE cout > ( 
+   SELECT cout 
+   FROM type_acte
+   WHERE libelle = 'typeacte2'
+);
 
 -- R6
 
