@@ -69,6 +69,20 @@ CREATE TABLE emplois(
    FOREIGN KEY(id_surveillant) REFERENCES surveillant(id_surveillant)
 );
 
+CREATE TABLE cours(
+   id_piscine INT,
+   id_surveillant INT,
+   date_début DATE,
+   nom_cours VARCHAR(50),
+   durée INT,
+   PRIMARY KEY(id_piscine, id_surveillant, date_début),
+   CONSTRAINT fk_cours_piscine 
+      FOREIGN KEY(id_piscine) REFERENCES piscine(id_piscine),
+   CONSTRAINT fk_cours_surveillant 
+      FOREIGN KEY(id_surveillant) REFERENCES surveillant(id_surveillant)
+);
+
+
 CREATE TABLE surveillance(
    id_piscine INT,
    id_surveillant INT,
