@@ -334,6 +334,13 @@ WHERE emplois.date_debut < "2023-12-21" AND (emplois.date_fin IS NULL OR emplois
 --  +--------------+----------------------------------------------+-------+
 
 
+SELECT ville.nom_ville, piscine.nom, MAX(bassin.longueur) AS maxl
+FROM bassin
+JOIN piscine ON bassin.id_piscine = piscine.id_piscine
+JOIN ville ON piscine.id_ville = ville.id_ville
+GROUP BY ville.nom_ville, piscine.nom
+ORDER BY ville.nom_ville ASC, piscine.nom ASC;
+
 
 -- R4 : Donner  le nombre de piscines dans chaque ville pour les villes où il y a plus de 2 piscines.
 --   ( affichage : nom des villes, nombre de piscines, le résultat sera trié selon l’ordre lexicographique inverse sur le nom des villes ).
