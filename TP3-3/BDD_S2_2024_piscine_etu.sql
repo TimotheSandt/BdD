@@ -1,3 +1,6 @@
+
+
+
 DROP TABLE IF EXISTS cours;
 
 DROP TABLE IF EXISTS emplois;
@@ -72,10 +75,11 @@ CREATE TABLE emplois(
 CREATE TABLE cours(
    id_piscine INT,
    id_surveillant INT,
-   date_début DATE,
+   date_debut DATE,
+   heure_debut DATE,
    nom_cours VARCHAR(50),
-   durée INT,
-   PRIMARY KEY(id_piscine, id_surveillant, date_début),
+   duree INT,
+   PRIMARY KEY(id_piscine, id_surveillant, date_debut, heure_debut),
    CONSTRAINT fk_cours_piscine 
       FOREIGN KEY(id_piscine) REFERENCES piscine(id_piscine),
    CONSTRAINT fk_cours_surveillant 
@@ -290,6 +294,10 @@ INSERT INTO surveillance(id_piscine, id_surveillant, date_debut, date_fin, horai
 --  +-----------------+
 --  |              10 |
 --  +-----------------+
+
+SELECT COUNT(DISTINCT id_surveillant) AS nb_surveillants
+FROM cours
+WHERE YEAR(date_debut) = 2023;
 
 -- R2 :  Donner le nombre de surveillants employés  le 21 décembre 2023 dans la ville de "Belfort".
 -- (affichage : un numérique uniquement). Faire attention, si la colonne «date_fin» n’est pas renseigné,
