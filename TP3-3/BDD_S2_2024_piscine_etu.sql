@@ -311,6 +311,13 @@ WHERE YEAR(date_debut) = 2023;
 --  |                                   11 |
 --  +--------------------------------------+
 
+
+SELECT COUNT(DISTINCT emplois.id_surveillant) AS nbr_surveillants_belfort_21_dec_2023
+FROM emplois
+JOIN ville ON emplois.id_ville = ville.id_ville
+WHERE emplois.date_debut < "2023-12-21" AND (emplois.date_fin IS NULL OR emplois.date_fin > "2023-12-21")
+   AND ville.nom_ville LIKE "Belfort";
+
 -- R3 : Afficher la longueur maximale (des bassins) par piscine
 -- (affichage : un numérique qui correspond à la longueur, le nom de la ville, le nom de la piscine ;
 -- trier le résultat par ville croissant puis par nom de piscine croissant).
