@@ -354,6 +354,13 @@ ORDER BY ville.nom_ville ASC, piscine.nom ASC;
 --  |           2 | belfort      |
 --  +-------------+--------------+
 
+SELECT COUNT(piscine.id_piscine) AS nbr_piscine, ville.nom_ville
+FROM piscine
+JOIN ville ON piscine.id_ville = ville.id_ville
+GROUP BY ville.nom_ville
+HAVING COUNT(piscine.id_piscine) >= 2
+ORDER BY ville.nom_ville DESC;
+
 
 -- R5 : Donner le nom des surveillants employés à belfort avant ou en 2023 qui n’ont pas donné un cours en 2023
 --  (commencer par réaliser la requête qui affiche l’identifiant des surveillants ayant réalisé un cours en 2023)
