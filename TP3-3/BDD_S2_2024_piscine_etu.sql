@@ -378,6 +378,19 @@ ORDER BY ville.nom_ville DESC;
 --  +-----------------+
 
 
+SELECT surveillant.nom_surveillant 
+FROM emplois
+JOIN ville ON emplois.id_ville = ville.id_ville
+JOIN surveillant ON emplois.id_surveillant = surveillant.id_surveillant
+WHERE YEAR(emplois.date_debut) <= 2023 
+   AND ville.nom_ville LIKE "Belfort"
+   AND surveillant.id_surveillant NOT IN ( 
+      SELECT id_surveillant
+      FROM cours
+      WHERE YEAR(date_debut) = 2023
+   ) 
+ORDER BY surveillant.nom_surveillant DESC;
+
 
 -- R6 : Donner le nom du (des) surveillant(s) de belfort qui gagne(nt) plus que la moyenne des salaires des surveillants de montbéliard.
 -- ( affichage : nom du (des) surveillant(s) et leur(s) salaire(s), le résultat sera trié selon l’ordre lexicographique inverse
