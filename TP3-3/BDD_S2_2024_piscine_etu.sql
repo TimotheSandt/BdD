@@ -258,10 +258,10 @@ INSERT INTO cours(id_piscine, id_surveillant, date_debut, heure_debut, nom_cours
 (2,7, '2023-10-22', '09:00:00', 'trilion', 900)
 ;
 
-# INSERT INTO cours(id_piscine, id_surveillant, date_debut, heure_debut, nom_cours, duree)
-#  VALUES
-# (2,7, '2023-10-22', '09:00:00', 'trilion', 900)
-# ;
+--  INSERT INTO cours(id_piscine, id_surveillant, date_debut, heure_debut, nom_cours, duree)
+--   VALUES
+--  (2,7, '2023-10-22', '09:00:00', 'trilion', 900)
+--  ;
 
 INSERT INTO cours(id_piscine, id_surveillant, date_debut, heure_debut, nom_cours, duree)
  VALUES
@@ -285,11 +285,11 @@ INSERT INTO surveillance(id_piscine, id_surveillant, date_debut, date_fin, horai
 -- (affichage : un numérique uniquement). Utiliser le minimum de table.
 
 
-# +-----------------+
-# | nb_surveillants |
-# +-----------------+
-# |              10 |
-# +-----------------+
+--  +-----------------+
+--  | nb_surveillants |
+--  +-----------------+
+--  |              10 |
+--  +-----------------+
 
 -- R2 :  Donner le nombre de surveillants employés  le 21 décembre 2023 dans la ville de "Belfort".
 -- (affichage : un numérique uniquement). Faire attention, si la colonne «date_fin» n’est pas renseigné,
@@ -297,26 +297,26 @@ INSERT INTO surveillance(id_piscine, id_surveillant, date_debut, date_fin, horai
 
 
 
-# +--------------------------------------+
-# | nbr_surveillants_belfort_21_dec_2023 |
-# +--------------------------------------+
-# |                                   11 |
-# +--------------------------------------+
+--  +--------------------------------------+
+--  | nbr_surveillants_belfort_21_dec_2023 |
+--  +--------------------------------------+
+--  |                                   11 |
+--  +--------------------------------------+
 
 -- R3 : Afficher la longueur maximale (des bassins) par piscine
 -- (affichage : un numérique qui correspond à la longueur, le nom de la ville, le nom de la piscine ;
 -- trier le résultat par ville croissant puis par nom de piscine croissant).
 
 
-# +--------------+----------------------------------------------+-------+
-# | nom_ville    | nom                                          | maxl  |
-# +--------------+----------------------------------------------+-------+
-# | belfort      | Gabriel Pannoux                              | 25.00 |
-# | belfort      | Piscine du parc                              | 50.00 |
-# | lure         | nauti Lure                                   | 25.00 |
-# | montbéliard  | CENTRE AQUATIQUE RENÉ DONZÉ (montbéliard)    | 50.00 |
-# | montbéliard  | la citédo                                    | 25.00 |
-# +--------------+----------------------------------------------+-------+
+--  +--------------+----------------------------------------------+-------+
+--  | nom_ville    | nom                                          | maxl  |
+--  +--------------+----------------------------------------------+-------+
+--  | belfort      | Gabriel Pannoux                              | 25.00 |
+--  | belfort      | Piscine du parc                              | 50.00 |
+--  | lure         | nauti Lure                                   | 25.00 |
+--  | montbéliard  | CENTRE AQUATIQUE RENÉ DONZÉ (montbéliard)    | 50.00 |
+--  | montbéliard  | la citédo                                    | 25.00 |
+--  +--------------+----------------------------------------------+-------+
 
 
 
@@ -325,12 +325,12 @@ INSERT INTO surveillance(id_piscine, id_surveillant, date_debut, date_fin, horai
 
 
 
-# +-------------+--------------+
-# | nbr_piscine | nom_ville    |
-# +-------------+--------------+
-# |           2 | montbéliard  |
-# |           2 | belfort      |
-# +-------------+--------------+
+--  +-------------+--------------+
+--  | nbr_piscine | nom_ville    |
+--  +-------------+--------------+
+--  |           2 | montbéliard  |
+--  |           2 | belfort      |
+--  +-------------+--------------+
 
 
 -- R5 : Donner le nom des surveillants employés à belfort avant ou en 2023 qui n’ont pas donné un cours en 2023
@@ -338,15 +338,15 @@ INSERT INTO surveillance(id_piscine, id_surveillant, date_debut, date_fin, horai
 --  ( affichage : nom du (des) surveillant(s), , le résultat sera trié selon l’ordre lexicographique (alphabétique) inverse ).
 
 
-# +-----------------+
-# | nom_surveillant |
-# +-----------------+
-# | surveillant9    |
-# | surveillant8    |
-# | surveillant6    |
-# | surveillant11   |
-# | surveillant10   |
-# +-----------------+
+--  +-----------------+
+--  | nom_surveillant |
+--  +-----------------+
+--  | surveillant9    |
+--  | surveillant8    |
+--  | surveillant6    |
+--  | surveillant11   |
+--  | surveillant10   |
+--  +-----------------+
 
 
 
@@ -356,14 +356,14 @@ INSERT INTO surveillance(id_piscine, id_surveillant, date_debut, date_fin, horai
 -- renseignée (CDI) ou si cette date n’est pas encore passée.
 
 
-# +-----------------+--------------------------+
-# | nom_surveillant | round(emplois.salaire,2) |
-# +-----------------+--------------------------+
-# | surveillant8    |                  1850.00 |
-# | surveillant6    |                  1850.00 |
-# | surveillant4    |                  1850.00 |
-# | surveillant2    |                  1900.00 |
-# +-----------------+--------------------------+
+--  +-----------------+--------------------------+
+--  | nom_surveillant | round(emplois.salaire,2) |
+--  +-----------------+--------------------------+
+--  | surveillant8    |                  1850.00 |
+--  | surveillant6    |                  1850.00 |
+--  | surveillant4    |                  1850.00 |
+--  | surveillant2    |                  1900.00 |
+--  +-----------------+--------------------------+
 
 
 -- R7 : Donner le nom des piscines où il y a eu plus de 10 heures de cours au mois d’octobre 2023
@@ -384,8 +384,8 @@ INSERT INTO surveillance(id_piscine, id_surveillant, date_debut, date_fin, horai
 
 
 
-+-----------------+----------+
-| nom_surveillant | count(*) |
-+-----------------+----------+
-| surveillant5    |       11 |
-+-----------------+----------+
+-- +-----------------+----------+
+-- | nom_surveillant | count(*) |
+-- +-----------------+----------+
+-- | surveillant5    |       11 |
+-- +-----------------+----------+
