@@ -407,6 +407,17 @@ ORDER BY surveillant.nom_surveillant DESC;
 --  | surveillant2    |                  1900.00 |
 --  +-----------------+--------------------------+
 
+SELECT DISTINCT surveillant.nom_surveillant, ROUND(emplois.salaire, 2)
+FROM emplois
+JOIN surveillant ON emplois.id_surveillant = surveillant.id_surveillant
+JOIN ville ON emplois.id_ville = ville.id_ville
+WHERE emplois.salaire > (
+   SELECT AVG(emplois.salaire)
+   FROM emplois
+   WHERE emplois.date_fin IS NULL OR emplois.date_fin > NOW()
+) AND ville.nom_ville LIKE "Belfort" AND emplois.date_fin IS NULL OR emplois.date_fin > NOW()
+ORDER BY surveillant.nom_surveillant DESC;
+
 
 -- R7 : Donner le nom des piscines où il y a eu plus de 10 heures de cours au mois d’octobre 2023
 -- et qui n’ont donné aucun cours en aout 2023. La durée des cours est en minutes dans la base de données.
