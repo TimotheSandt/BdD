@@ -430,7 +430,24 @@ ORDER BY surveillant.nom_surveillant DESC;
 +-----------------+---------------+----------------------+
 | Piscine du parc |             1 |                 15.0 |
 +-----------------+---------------+----------------------+*/
-
+SELECT piscine.nom
+, COUNT(DISTINCT cours.id_piscine, cours.id_surveillant, cours.date_debut) AS nb_cours_pisc
+, SUM(ROUND(cours.duree / 60, 1)) AS nb_heures_cours_pisc
+FROM cours 
+JOIN piscine ON cours.id_piscine = piscine.id_piscine
+WHERE EXISTS (
+   SELECT id_piscine
+   FROM cours
+   WHERE MONTH(date_debut) = 10 AND YEAR(date_debut) = 2023 AND id_piscine = piscine.id_piscine
+   HAVING SUM(ROUND(cours.duree / 60, 1)) > 10
+)
+AND NOT EXISTS (
+   SELECT id_piscine
+   FROM cours
+   WHERE MONTH(date_debut) = 8 AND YEAR(date_debut) = 2023 AND id_piscine = piscine.id_piscine
+   HAVING SUM(ROUND(cours.duree / 60, 1)) > 0
+)
+GROUP BY piscine.nom;
 
 -- R8 : Donner le nom du surveillant de belfort qui a donné le plus grand nombre de
 -- cours à la piscine de Belfort.
