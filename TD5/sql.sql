@@ -171,3 +171,18 @@ WHERE (fonction, idResponsable) = (
     FROM EMPLOYE
     WHERE nom = 'CODD'
 );
+
+SELECT nom
+FROM EMPLOYE
+WHERE (departement_id, idResponsable) NOT IN (
+    SELECT departement_id, idEmploye
+    FROM EMPLOYE
+);
+
+SELECT E.nom
+FROM EMPLOYE AS E
+WHERE E.departement_id <> (
+    SELECT E2.departement_id
+    FROM EMPLOYE AS E2
+    WHERE E.idResponsable = E2.idEmploye
+) AND E.idResponsable IS NOT NULL;
