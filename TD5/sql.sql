@@ -270,3 +270,27 @@ UNION
 SELECT D.nom, D.idDept, E.nom, E.fonction, E.departement_id
 FROM EMPLOYE AS E
 LEFT JOIN DEPARTEMENT AS D ON E.departement_id = D.idDept;
+
+SHOW CREATE TABLE EMPLOYE;
+ALTER TABLE EMPLOYE ADD INDEX `departement_nom_index` (`nom`);
+ALTER TABLE EMPLOYE ADD INDEX `employe_date_embauche_index` (`date_embauche`);
+SHOW CREATE TABLE EMPLOYE;
+SHOW INDEX FROM EMPLOYE \G;
+
+EXPLAIN SELECT EMPLOYE.nom FROM EMPLOYE WHERE fonction LIKE 'd%' AND date_embauche >='1985-11-12' \G;
+
+
+EXPLAIN
+SELECT DISTINCT E1.nom 
+  FROM EMPLOYE E1, DEPARTEMENT D1, EMPLOYE E2, DEPARTEMENT D2
+WHERE E1.departement_id=D1.idDept 
+       AND E2.departement_id=D2.idDept 
+AND D1.nom='vente'
+AND D2.nom='direction'
+AND E1.date_embauche=E2.date_embauche
+\G;
+
+SHOW GLOBAL STATUS like "%used_connections";
+show global status like 'opened_tables';
+SELECT @@table_open_cache;
+SELECT @@max_connections;
