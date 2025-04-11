@@ -135,3 +135,10 @@ WHERE fonction = (
     FROM EMPLOYE
     WHERE nom = 'CODD'
 );
+
+SELECT nom, fonction, salaire
+FROM EMPLOYE
+WHERE salaire > (
+    SELECT AVG(salaire)
+    FROM EMPLOYE
+);
