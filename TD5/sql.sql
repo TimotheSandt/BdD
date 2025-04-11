@@ -186,3 +186,12 @@ WHERE E.departement_id <> (
     FROM EMPLOYE AS E2
     WHERE E.idResponsable = E2.idEmploye
 ) AND E.idResponsable IS NOT NULL;
+
+SELECT E.nom, E.idEmploye, E.fonction, E.date_embauche, E.departement_id
+FROM EMPLOYE AS E
+WHERE EXISTS (
+    SELECT *
+    FROM EMPLOYE
+    WHERE date_embauche >= "2005-1-1"
+        AND departement_id = E.departement_id
+)
