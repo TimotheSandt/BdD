@@ -194,4 +194,21 @@ WHERE EXISTS (
     FROM EMPLOYE
     WHERE date_embauche >= "2005-1-1"
         AND departement_id = E.departement_id
-)
+);
+
+SELECT D.idDept, D.nom, D.lieu
+FROM EMPLOYE AS E
+JOIN DEPARTEMENT AS D ON E.departement_id = D.idDept
+WHERE E.nom = 'DUPONT';
+
+SELECT nom, fonction, departement_id
+FROM EMPLOYE
+WHERE fonction IN (
+    SELECT fonction
+    FROM EMPLOYE
+    WHERE departement_id = (
+        SELECT departement_id
+        FROM EMPLOYE
+        WHERE nom = 'DUPONT'
+    )
+) AND departement_id = 10;
