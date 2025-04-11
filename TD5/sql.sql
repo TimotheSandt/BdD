@@ -127,3 +127,11 @@ WHERE E.salaire > (
     FROM EMPLOYE 
     WHERE nom = 'SIMON'
 );
+
+SELECT nom, fonction, salaire, idResponsable
+FROM EMPLOYE
+WHERE fonction = (
+    SELECT fonction
+    FROM EMPLOYE
+    WHERE nom = 'CODD'
+);

@@ -439,13 +439,15 @@ WHERE EXISTS (
    SELECT id_piscine
    FROM cours
    WHERE MONTH(date_debut) = 10 AND YEAR(date_debut) = 2023 AND id_piscine = piscine.id_piscine
-   HAVING SUM(ROUND(cours.duree / 60, 1)) > 10
+   HAVING SUM(ROUND(cours.duree / 60, 1)) > 10*
+   GROUP BY id_piscine
 )
 AND NOT EXISTS (
    SELECT id_piscine
    FROM cours
    WHERE MONTH(date_debut) = 8 AND YEAR(date_debut) = 2023 AND id_piscine = piscine.id_piscine
    HAVING SUM(ROUND(cours.duree / 60, 1)) > 0
+   GROUP BY id_piscine
 )
 GROUP BY piscine.nom;
 
@@ -459,3 +461,9 @@ GROUP BY piscine.nom;
 -- +-----------------+----------+
 -- | surveillant5    |       11 |
 -- +-----------------+----------+
+
+
+SELECT surveillant.nom_surveillant, COUNT(*) AS nb_cours
+FROM cours
+JOIN surveillant ON cours.id_surveillant = surveillant.id_surveillant
+GROUP BY surveillant.nom_surveillant;
