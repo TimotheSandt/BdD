@@ -142,3 +142,15 @@ WHERE salaire > (
     SELECT AVG(salaire)
     FROM EMPLOYE
 );
+SELECT MIN(salaire)
+FROM EMPLOYE
+WHERE departement_id = 20 ;
+
+
+SELECT nom, fonction, salaire
+FROM EMPLOYE
+WHERE salaire > ANY (
+    SELECT salaire
+    FROM EMPLOYE
+    WHERE departement_id = 20 AND salaire IS NOT NULL
+);
