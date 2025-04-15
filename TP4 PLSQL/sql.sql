@@ -87,6 +87,34 @@ SELECT * FROM utilisateurs;
 
 
 
+-- Création de la table
+DROP TABLE IF EXISTS nombres;
+CREATE TABLE nombres (
+    valeur INT
+);
+DROP PROCEDURE IF EXISTS RemplirNombres;
+
+-- Insertion des valeurs de 1 à 10
+DELIMITER //
+CREATE PROCEDURE RemplirNombres()
+BEGIN
+    DECLARE i INT DEFAULT 1;
+    WHILE i <= 10 DO
+        INSERT INTO nombres (valeur) VALUES (i);
+        SET i = i + 1;
+    END WHILE;
+END //
+DELIMITER ;
+
+-- Appel de la procédure
+CALL RemplirNombres();
+
+-- Affichage du contenu de la table
+SELECT * FROM nombres;
+
+
+
+
 -- Création de la table historique_utilisateurs
 DROP TABLE IF EXISTS historique_utilisateurs;
 CREATE TABLE historique_utilisateurs (
