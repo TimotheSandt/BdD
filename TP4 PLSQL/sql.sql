@@ -55,7 +55,6 @@ DROP FUNCTION IF EXISTS CalculerMoyenne;
 
 
 
-
 DROP PROCEDURE IF EXISTS MiseAJourAge; 
 -- Création de la procédure
 DELIMITER //
@@ -80,4 +79,50 @@ DELIMITER ;
 CALL MiseAJourAge(1, 20);
 CALL MiseAJourAge(2, 15);
 
+SELECT * FROM utilisateurs;
+
+
+
+
+
+
+
+-- Création de la table historique_utilisateurs
+DROP TABLE IF EXISTS historique_utilisateurs;
+CREATE TABLE historique_utilisateurs (
+    id_utilisateur INT AUTO_INCREMENT PRIMARY KEY,
+    nom_utilisateur VARCHAR(50),
+    action VARCHAR(50),
+    date_action TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+DROP TRIGGER IF EXISTS  after_insert_utilisateur; 
+-- Création du déclencheur
+DELIMITER //
+CREATE TRIGGER after_insert_utilisateur
+AFTER INSERT ON utilisateurs
+FOR EACH ROW
+BEGIN
+    INSERT INTO historique_utilisateurs (id_utilisateur, nom_utilisateur, action)
+    VALUES (NEW.id, NEW.nom, 'Ajout');
+END //
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS  before_insert_utilisateur; 
+-- Création du déclencheur
+DELIMITER //
+CREATE TRIGGER before_insert_utilisateur
+BEFORE INSERT ON utilisateurs
+FOR EACH ROW
+BEGIN
+    SET NEW.nom = UPPER(NEW.nom),
+        NEW.prenom = LOWER(NEW.prenom);
+END //
+DELIMITER ;
+
+-- Ajout d'un utilisateur pour déclencher le déclencheur
+INSERT INTO utilisateurs (nom, age) VALUES ('lionel', 28);
+
+-- Affichage du contenu de la table historique_utilisateurs
+SELECT * FROM historique_utilisateurs;
 SELECT * FROM utilisateurs;
