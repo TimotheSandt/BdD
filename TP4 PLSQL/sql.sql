@@ -25,3 +25,30 @@ CALL AjouterUtilisateur('Jane', 'Doe', 30);
 -- Affichage du contenu de la table utilisateurs
 SELECT * FROM utilisateurs;
 
+
+
+
+
+
+
+-- Création de la fonction
+DELIMITER //
+CREATE FUNCTION CalculerMoyenne(a NUMERIC(19,4), b NUMERIC(19,4))
+RETURNS NUMERIC(19,4)
+BEGIN
+    DECLARE moyenne NUMERIC(19,4);
+    SET moyenne = (a + b) / 2;
+    RETURN moyenne;
+END //
+DELIMITER ;
+
+-- Utilisation de la fonction
+SELECT CalculerMoyenne(10, 20) AS MoyenneSet1;
+SELECT CalculerMoyenne(5, 16.3333) AS MoyenneSet2;
+
+SELECT ROUTINE_NAME, ROUTINE_TYPE   
+FROM information_schema.routines;
+
+DROP FUNCTION IF EXISTS CalculerMoyenne;
+
+
