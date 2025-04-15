@@ -61,12 +61,12 @@ DELIMITER //
 CREATE PROCEDURE MiseAJourAge(IN id_utilisateur INT, IN age_utilisateur INT)
 BEGIN
     IF age_utilisateur >= 18 THEN
-        SELECT 'Majeur' AS Statut;
+        -- SELECT 'Majeur' AS Statut;
         UPDATE utilisateurs 
         SET majeur = 1, age = age_utilisateur
         WHERE id = id_utilisateur;
     ELSE
-        SELECT 'Mineur' AS Statut;
+        -- SELECT 'Mineur' AS Statut;
         UPDATE utilisateurs 
         SET majeur = 0, age = age_utilisateur
         WHERE id = id_utilisateur;
@@ -145,6 +145,16 @@ FOR EACH ROW
 BEGIN
     SET NEW.nom = UPPER(NEW.nom),
         NEW.prenom = LOWER(NEW.prenom);
+
+    
+    IF NEW.age IS NOT NULL THEN
+        IF NOT NEW.age REGEXP '^[0-9]+$' AND NEW.age != 0 THEN
+            SIGNAL SQLSTATE '45000'
+            SET MESSAGE_TEXT = 'L''âge doit être numérique';
+        ELSE
+            SET NEW.majeur = IF(NEW.age >= 18, 1, 0);
+        END IF;
+    END IF;
 END //
 DELIMITER ;
 
@@ -194,3 +204,20 @@ SELECT * FROM utilisateurs;
 CALL AfficherUtilisateurs();
 SELECT * FROM utilisateurs;
 
+
+
+
+
+
+
+-- Test 1: Utilisateur majeur
+INSERT INTO utilisateurs (nom, prenom, age) VALUES ('Dupond', 'Pierre', 28);
+-- Test 2: Utilisateur mineur
+INSERT INTO utilisateurs (nom, prenom, age) VALUES ('Durant', 'Paul', 17);
+-- Test 3: Utilisateur sans âge spécifié
+INSERT INTO utilisateurs (nom, prenom) VALUES ('Martin', 'Sophie');
+-- Test 4: Utilisateur avec âge non numérique (générera une erreur)
+INSERT INTO utilisateurs (nom, prenom, age) VALUES ('Leroy', 'Jean', 'vingt');
+-- Vérification des résultats
+SELECT * FROM utilisateurs;
+SELECT * FROM historique_utilisateurs;
