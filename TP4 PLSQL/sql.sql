@@ -126,3 +126,39 @@ INSERT INTO utilisateurs (nom, age) VALUES ('lionel', 28);
 -- Affichage du contenu de la table historique_utilisateurs
 SELECT * FROM historique_utilisateurs;
 SELECT * FROM utilisateurs;
+
+
+
+
+
+
+DROP PROCEDURE IF EXISTS AfficherUtilisateurs ;
+DELIMITER //
+CREATE PROCEDURE AfficherUtilisateurs()
+BEGIN
+    DECLARE v_id INT;
+    DECLARE v_nom VARCHAR(50);
+    DECLARE v_age INT;
+    DECLARE v_majeur INT;
+    DECLARE v_utilisateur VARCHAR(255);
+    DECLARE fin INT DEFAULT 0;
+    DECLARE curs_utilisateur CURSOR FOR SELECT id,nom,age, majeur FROM utilisateurs;
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET fin = 1;
+
+    OPEN curs_utilisateur;
+    FETCH curs_utilisateur INTO v_id,v_nom,v_age,v_majeur;
+    WHILE (fin<>1) DO
+        SET v_age = v_age + 1;
+        SET v_utilisateur=CONCAT(
+            v_id, ' ; ', 
+            IFNULL(v_nom, ' '), ' ; ',
+            IFNULL(v_age, ' '), ' ; ',
+            IFNULL(v_majeur, ' '));
+        SELECT v_utilisateur;
+        FETCH curs_utilisateur INTO v_id,v_nom,v_age,v_majeur;
+    END WHILE;
+    CLOSE curs_utilisateur;
+END //
+DELIMITER ;
+
+CALL AfficherUtilisateurs();
