@@ -177,6 +177,7 @@ BEGIN
     FETCH curs_utilisateur INTO v_id,v_nom,v_age,v_majeur;
     WHILE (fin<>1) DO
         SET v_age = v_age + 1;
+        CALL MiseAJourAge(v_id, v_age);
         SET v_utilisateur=CONCAT(
             v_id, ' ; ', 
             IFNULL(v_nom, ' '), ' ; ',
@@ -189,4 +190,7 @@ BEGIN
 END //
 DELIMITER ;
 
+SELECT * FROM utilisateurs;
 CALL AfficherUtilisateurs();
+SELECT * FROM utilisateurs;
+
