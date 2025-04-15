@@ -52,3 +52,32 @@ FROM information_schema.routines;
 DROP FUNCTION IF EXISTS CalculerMoyenne;
 
 
+
+
+
+
+DROP PROCEDURE IF EXISTS MiseAJourAge; 
+-- Création de la procédure
+DELIMITER //
+CREATE PROCEDURE MiseAJourAge(IN id_utilisateur INT, IN age_utilisateur INT)
+BEGIN
+    IF age_utilisateur >= 18 THEN
+        SELECT 'Majeur' AS Statut;
+        UPDATE utilisateurs 
+        SET majeur = 1, age = age_utilisateur
+        WHERE id = id_utilisateur;
+    ELSE
+        SELECT 'Mineur' AS Statut;
+        UPDATE utilisateurs 
+        SET majeur = 0, age = age_utilisateur
+        WHERE id = id_utilisateur;
+    END IF;
+END //
+DELIMITER ;
+
+
+-- Appel de la procédure
+CALL MiseAJourAge(1, 20);
+CALL MiseAJourAge(2, 15);
+
+SELECT * FROM utilisateurs;
