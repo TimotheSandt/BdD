@@ -134,7 +134,7 @@ SELECT * FROM Client;
 SELECT * FROM Journal;
 
 
-
+/*
 
 LOCK TABLES Client   READ,              -- On pose un verrou de lecture sur Client
             Spectacle  WRITE;           -- et un verrou d'écriture sur Spectacle
@@ -181,3 +181,41 @@ UPDATE Spectacle SET nb_places_libres=5 WHERE id_spectacle = 1;
 
 SELECT * FROM Spectacle WHERE id_spectacle = 1 FOR UPDATE;
 UPDATE Spectacle SET nb_places_libres=10 WHERE id_spectacle = 1;
+
+*/
+
+
+DROP PROCEDURE IF EXISTS sp_commande_spectacle ;
+
+DELIMITER //
+
+CREATE PROCEDURE sp_commande_spectacle(IN p_nb_places INT, IN p_client_id INT, IN p_spectacle_id INT)
+
+BEGIN
+
+    DECLARE v_prix DECIMAL(19,2);
+    START TRANSACTION;
+
+    UPDATE Client SET nb_places_reservees = nb_places_reservees + p_nb_places WHERE id_client = p_client_id;
+    UPDATE Spectacle SET nb_places_libres = nb_places_libres - p_nb_places WHERE id_spectacle = p_spectacle_id;
+
+    SELECT p_nb_places*tarif INTO v_prix
+    FROM Spectacle 
+    WHERE id_spectacle = p_spectacle_id;
+
+    INSERT INTO Journal VALUES(NULL, 'achat de place', p_client_id, p_nb_places, p_spectacle_id, v_prix);
+
+    COMMIT;
+
+END; //
+
+DELIMITER ;
+
+
+SELECT * FROM Spectacle;
+SELECT * FROM Client;
+SELECT * FROM Journal;
+CALL sp_commande_spectacle(25,1,1);
+SELECT * FROM Spectacle;
+SELECT * FROM Client;
+SELECT * FROM Journal;
