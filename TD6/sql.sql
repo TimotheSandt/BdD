@@ -132,3 +132,52 @@ COMMIT;
 SELECT * FROM Spectacle;
 SELECT * FROM Client;
 SELECT * FROM Journal;
+
+
+
+
+LOCK TABLES Client   READ,              -- On pose un verrou de lecture sur Client
+            Spectacle  WRITE;           -- et un verrou d'écriture sur Spectacle
+
+
+SELECT * FROM Client;
+SELECT * FROM Journal;
+SELECT * FROM Spectacle;
+
+
+UPDATE Client SET nb_places_reservees = 1  WHERE id_client=1;
+UPDATE Spectacle SET nb_places_libres = 2 WHERE id_spectacle=1;
+
+UNLOCK TABLES  ;
+
+
+
+SET autocommit = 0;
+START TRANSACTION;
+SELECT "P1";
+SELECT SLEEP(15);
+UPDATE Client SET nom="alexandre 1" WHERE id_client=1;
+SELECT SLEEP(15);
+UPDATE Spectacle SET titre="Ben hur 1" WHERE id_spectacle=1; 
+
+-- lancer l'autre script dans un terminal
+SELECT "P1";
+COMMIT; 
+
+
+
+SET autocommit = 0;
+START TRANSACTION;
+SELECT "P2";
+UPDATE Spectacle SET titre="Ben hur 2" WHERE id_spectacle=1;
+SELECT SLEEP(15);
+UPDATE Client SET nom="alexandre 2" WHERE id_client=1;
+SELECT "P2";
+COMMIT; 
+
+
+SELECT * FROM Spectacle WHERE id_spectacle = 1 LOCK IN SHARE MODE;
+UPDATE Spectacle SET nb_places_libres=5 WHERE id_spectacle = 1;
+
+SELECT * FROM Spectacle WHERE id_spectacle = 1 FOR UPDATE;
+UPDATE Spectacle SET nb_places_libres=10 WHERE id_spectacle = 1;
