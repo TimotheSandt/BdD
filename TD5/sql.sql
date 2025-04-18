@@ -294,3 +294,42 @@ SHOW GLOBAL STATUS like "%used_connections";
 show global status like 'opened_tables';
 SELECT @@table_open_cache;
 SELECT @@max_connections;
+
+
+
+
+CREATE VIEW v_emp10 AS
+    SELECT *
+    FROM EMPLOYE
+    WHERE departement_id = 10 ;
+
+CREATE VIEW v_emp10co AS
+    SELECT *
+    FROM EMPLOYE
+    WHERE departement_id = 10 
+WITH CHECK OPTION ;
+
+-- pour les visualiser
+SHOW TABLES;
+
+
+
+SELECT * FROM v_emp10;
+UPDATE v_emp10 SET salaire  = salaire * 1.1;
+SELECT * FROM EMPLOYE;
+
+
+SELECT * FROM v_emp10;
+UPDATE v_emp10 SET departement_id=20 where idEmploye=15155;
+SELECT * FROM v_emp10;
+UPDATE v_emp10 SET departement_id=10 where idEmploye=15155;   
+SELECT * FROM v_emp10;   
+            --  on ne retrouve plus l'employe GARDARIN !
+
+SELECT * FROM v_emp10co;
+UPDATE v_emp10co SET departement_id=20 where idEmploye=26834;   
+SELECT * FROM v_emp10co;
+UPDATE v_emp10co SET departement_id=10 where idEmploye=26834;
+
+
+DROP  VIEW  v_emp10,v_emp10co;
