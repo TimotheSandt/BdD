@@ -21,6 +21,7 @@ create table Projet(
  RespProj int, 
  VilleP varchar(50), 
  Budget decimal(10,2),
+ CONSTRAINT fk_projet_employe
  FOREIGN KEY (RespProj) REFERENCES Employe(NumSS)
 ); 
 
@@ -37,6 +38,8 @@ create table Embauche(
  Profil varchar(20),
  FOREIGN KEY (NumSS) REFERENCES Employe(NumSS),
  FOREIGN KEY (NumProj) REFERENCES Projet(NumProj),
+ CONSTRAINT fk_embauche_grille_sal
+    FOREIGN KEY (Profil) REFERENCES Grille_sal(profil),
  PRIMARY KEY (NumSS, NumProj)
 );
 
@@ -88,3 +91,38 @@ BEGIN
 END;
 // 
 DELIMITER ;
+
+/*
+    CALL SupprimerEmployes70ansOuPlus();
+    CALL SupprimerEmployes70ansOuPlus();
+*/
+
+
+
+DELIMITER //
+DROP PROCEDURE IF EXISTS ModifierProfilsEtSalaire;
+
+CREATE PROCEDURE ModifierProfilsEtSalaire()
+BEGIN
+    ALTER TABLE Embauche DROP FOREIGN KEY fk_embauche_grille_sal;
+
+    UPDATE Grille_sal 
+    SET profil = CONCAT('P', profil);
+
+    UPDATE Embauche 
+    SET Profil = CONCAT('P', Profil);
+
+    ALTER TABLE Embauche ADD CONSTRAINT fk_embauche_grille_sal
+    FOREIGN KEY (Profil) REFERENCES Grille_sal(Profil);
+END;
+// 
+DELIMITER ;
+
+/*
+    SELECT profil, salaire FROM Grille_sal;
+
+    CALL ModifierProfilsEtSalaire();
+
+    SELECT profil, salaire FROM Grille_sal;
+    SELECT * FROM Embauche;
+*/
