@@ -70,3 +70,21 @@ insert into Grille_sal (profil, salaire) values ('Tech', 35000.00);
 insert into Embauche values (77889, 123,   STR_TO_DATE('1-3-2014', '%d-%m-%Y')  ,'Deve');
 insert into Embauche values (90011, 123,   STR_TO_DATE('1-5-2014', '%d-%m-%Y')  ,'Tech');
 insert into Embauche values (22233, 757,   STR_TO_DATE('1-3-2014', '%d-%m-%Y')  ,'Deve');
+
+
+DELIMITER //
+DROP PROCEDURE IF EXISTS SupprimerEmployes70ansOuPlus;
+
+CREATE PROCEDURE SupprimerEmployes70ansOuPlus()
+BEGIN
+    DECLARE nbLignes INT DEFAULT 0;
+    DELETE FROM Employe WHERE TIMESTAMPDIFF(YEAR, DateNaiss, CURDATE()) >= 70;
+    SET nbLignes = ROW_COUNT();
+    IF (nbLignes = 0) THEN
+        SELECT 'Aucun employé supprimé.' AS Message;
+    ELSE
+        SELECT CONCAT('Nombre de lignes supprimées : ', nbLignes) AS Message;
+    END IF;
+END;
+// 
+DELIMITER ;
